@@ -27,7 +27,6 @@ public class TesteIntercessao {
 
         for(Elemento e : Intercessao.getInstancia().get(conjunto1, conjunto2).getElementos()){
             System.out.println(e.getValor());
-        }
-        
+        }  
     }
 }

@@ -10,13 +10,11 @@ public class Intercessao {
 
     public Conjunto get(Conjunto conjunto1, Conjunto conjunto2) {
 
-        Conjunto intercessao = new Conjunto("I");
+        Conjunto intercessao = new Conjunto();
 
         for (int i = 0; i < conjunto1.getElementos().size(); i++) {
             if (Pertinencia.getInstancia().pertence(conjunto1.getElementos().get(i), conjunto2)) {
-                if (Pertinencia.getInstancia().pertence(conjunto2.getElementos().get(i), conjunto1)) {
-                    System.out.println(conjunto1.getElementos().get(i).getValor());
-                }
+                intercessao.adicionarElemento(conjunto1.getElementos().get(i));
             }
         }
 

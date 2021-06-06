@@ -10,7 +10,7 @@ public class Uniao {
 
     public Conjunto get(Conjunto conjunto1, Conjunto conjunto2) {
 
-        Conjunto uniao = new Conjunto("U");
+        Conjunto uniao = new Conjunto();
 
         for (int i = 0; i < conjunto1.getElementos().size(); i++) {
             uniao.adicionarElemento(conjunto1.getElementos().get(i));

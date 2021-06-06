@@ -2,12 +2,6 @@ package br.com.matematica.models;
 
 public class Contido {
 
-    private static Contido instancia = new Contido();
-
-    public static Contido getInstancia() {
-        return instancia;
-    }
-
     public boolean contidoIgual(Conjunto conjunto1, Conjunto conjunto2) {
 
         if (conjunto1.getElementos().size() > conjunto2.getElementos().size()) {

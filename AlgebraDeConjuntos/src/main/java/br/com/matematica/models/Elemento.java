@@ -2,7 +2,7 @@ package br.com.matematica.models;
 
 import java.util.Objects;
 
-public class Elemento extends Pertinencia{
+public class Elemento {
 
     private String nome;
     private int valor;
@@ -57,6 +57,4 @@ public class Elemento extends Pertinencia{
         }
         return true;
     }
-
-    
 }

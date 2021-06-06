@@ -14,6 +14,7 @@ public class Conjunto {
         this.nome = nome;
         this.elementos = new ArrayList<>();
     }
+
     public Conjunto() {
         this.elementos = new ArrayList<>();
     }
@@ -39,7 +40,7 @@ public class Conjunto {
         for (Elemento e : removerDuplicados) {
             this.elementos.add(e);
         }
-        
+
     }
 
     public void adicionarElemento(Elemento elemento) {
