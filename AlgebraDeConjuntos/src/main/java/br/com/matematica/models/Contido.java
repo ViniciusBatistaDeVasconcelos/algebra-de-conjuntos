@@ -11,10 +11,8 @@ public class Contido {
         int contador = 0;
 
         for (int i = 0; i < conjunto1.getElementos().size(); i++) {
-            for (int j = 0; j < conjunto2.getElementos().size(); j++) {
-                if (conjunto1.getElementos().get(i).getValor() == conjunto2.getElementos().get(j).getValor()) {
-                    ++contador;
-                }
+            if (Pertinencia.getInstancia().pertence(conjunto1.getElementos().get(i), conjunto2)) {
+                ++contador;
             }
         }
 
