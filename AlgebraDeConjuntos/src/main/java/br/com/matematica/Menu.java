@@ -39,6 +39,79 @@ public class Menu {
         return str;
     }
 
+    public static void mostrarConjuntos(List<Conjunto> conjuntos, int tamanho) {
+
+        for (int j = 0; j < tamanho; j++) {
+            if (conjuntos.get(j).getNome() != null) {
+                System.out.print(conjuntos.get(j).getNome() + " = ");
+            }
+            if (conjuntos.get(j).getElementos().isEmpty()) {
+                System.out.print("{}\n");
+            } else {
+                for (int i = 0; i < conjuntos.get(j).getElementos().size(); i++) {
+
+                    if (conjuntos.get(j).getElementos().size() == 1) {
+                        System.out.print("{" + conjuntos.get(j).getElementos().get(i).getValor() + "}\n");
+                    } else {
+                        if (i == 0) {
+                            System.out.print("{" + conjuntos.get(j).getElementos().get(i).getValor() + ", ");
+                        } else if (i == conjuntos.get(j).getElementos().size() - 1) {
+                            System.out.print(conjuntos.get(j).getElementos().get(i).getValor() + "}\n");
+                        } else {
+                            System.out.print(conjuntos.get(j).getElementos().get(i).getValor() + ", ");
+                        }
+                    }
+                }
+            }
+        }
+    }
+
+    public static void mostrarNomeConjuntos(List<Conjunto> conjuntos) {
+
+        for (int j = 0; j < conjuntos.size(); j++) {
+            if (conjuntos.get(j).getNome() != null) {
+                if (conjuntos.size() == 1) {
+                    System.out.print(conjuntos.get(0).getNome() + ".\n");
+                } else {
+                    if (j == conjuntos.size() - 1) {
+                        System.out.print(conjuntos.get(j).getNome() + ".\n");
+                    } else {
+                        System.out.print(conjuntos.get(j).getNome() + ", ");
+                    }
+                }
+            }
+        }
+    }
+
+    public static void mostrarConjunto(Conjunto conjunto) {
+        if (conjunto.getNome() != null) {
+            System.out.print(conjunto.getNome() + " = ");
+        }
+        if (conjunto.getElementos().isEmpty()) {
+            System.out.println("{}\n");
+        } else {
+            for (int i = 0; i < conjunto.getElementos().size(); i++) {
+                if (conjunto.getElementos().size() == 1) {
+                    System.out.print("{" + conjunto.getElementos().get(i).getValor() + "}\n");
+                } else {
+                    if (i == 0) {
+                        System.out.print("{" + conjunto.getElementos().get(i).getValor() + ", ");
+                    } else if (i == conjunto.getElementos().size() - 1) {
+                        System.out.print(conjunto.getElementos().get(i).getValor() + "}\n");
+                    } else {
+                        System.out.print(conjunto.getElementos().get(i).getValor() + ", ");
+                    }
+                }
+            }
+        }
+    }
+
+    public static void mostrarElementos(List<Elemento> elementos, int tamanho) {
+        for (int j = 0; j < tamanho; j++) {
+            System.out.println(elementos.get(j).getNome() + " = " + elementos.get(j).getValor());
+        }
+    }
+
     public static void main(String[] args) throws IOException, FileNotFoundException, ExceptionSintaxeArquivo, ExceptionObjetoInvalido {
         GerenciadorArquivo arquivo = new GerenciadorArquivo();
         Contido contido = new Contido();
@@ -57,59 +130,23 @@ public class Menu {
                     System.out.println("O arquivo foi lido com sucesso...");
 
                     if (!arquivo.getConjuntos().isEmpty()) {
-
-                        System.out.println("\nConjuntos(S):\n");
-                        for (int j = 0; j < arquivo.getConjuntos().size(); j++) {
-                            System.out.print(arquivo.getConjuntos().get(j).getNome() + " = ");
-                            if (arquivo.getConjuntos().get(j).getElementos().isEmpty()) {
-                                System.out.print("{}\n");
-                            } else {
-                                for (int i = 0; i < arquivo.getConjuntos().get(j).getElementos().size(); i++) {
-                                    if (arquivo.getConjuntos().get(j).getElementos().size() == 1) {
-                                        System.out.print("{" + arquivo.getConjuntos().get(j).getElementos().get(0).getValor() + "}\n");
-                                    } else {
-                                        if (i == 0) {
-                                            System.out.print("{" + arquivo.getConjuntos().get(j).getElementos().get(i).getValor() + ", ");
-                                        } else if (i == arquivo.getConjuntos().get(j).getElementos().size() - 1) {
-                                            System.out.print(arquivo.getConjuntos().get(j).getElementos().get(i).getValor() + "}\n");
-                                        } else {
-                                            System.out.print(arquivo.getConjuntos().get(j).getElementos().get(i).getValor() + ", ");
-                                        }
-                                    }
-                                }
-                            }
-                        }
+                        System.out.println("\nConjunto(s):\n");
+                        mostrarConjuntos(arquivo.getConjuntos(), arquivo.getConjuntos().size());
                     }
                     if (!arquivo.getElementos().isEmpty()) {
-
                         System.out.println("\nElemento(s):\n");
-                        for (Elemento e : arquivo.getElementos()) {
-                            System.out.println(e.getNome() + " = " + e.getValor());
-                        }
+                        mostrarElementos(arquivo.getElementos(), arquivo.getElementos().size());
                     }
                     break;
                 case 2:
                     if (!arquivo.getConjuntos().isEmpty() && !arquivo.getElementos().isEmpty()) {
+
                         System.out.println("\nSerão utilizados:");
+                        System.out.print("\nElemento: ");
+                        mostrarElementos(arquivo.getElementos(), 1);
 
-                        System.out.print("\nElemento:");
-                        System.out.println("\t" + arquivo.getElementos().get(0).getNome() + " = " + arquivo.getElementos().get(0).getValor());
-
-                        System.out.print("\nConjunto:");
-                        System.out.print("\t" + arquivo.getConjuntos().get(0).getNome() + " = ");
-                        for (int i = 0; i < arquivo.getConjuntos().get(0).getElementos().size(); i++) {
-                            if (arquivo.getConjuntos().get(0).getElementos().size() == 1) {
-                                System.out.print("{" + arquivo.getConjuntos().get(0).getElementos().get(0).getValor() + "}");
-                            } else {
-                                if (i == 0) {
-                                    System.out.print("{" + arquivo.getConjuntos().get(0).getElementos().get(i).getValor() + ", ");
-                                } else if (i == arquivo.getConjuntos().get(0).getElementos().size() - 1) {
-                                    System.out.print(arquivo.getConjuntos().get(0).getElementos().get(i).getValor() + "}\n");
-                                } else {
-                                    System.out.print(arquivo.getConjuntos().get(0).getElementos().get(i).getValor() + ", ");
-                                }
-                            }
-                        }
+                        System.out.print("\nConjunto: ");
+                        mostrarConjuntos(arquivo.getConjuntos(), 1);
 
                         System.out.print("\nResultado: ");
                         if (Pertinencia.getInstancia().pertence(arquivo.getElementos().get(0), arquivo.getConjuntos().get(0))) {
@@ -124,23 +161,10 @@ public class Menu {
                 case 3:
                     if (!arquivo.getConjuntos().isEmpty() && arquivo.getConjuntos().size() >= 2) {
 
-                        System.out.println("\nSerão utilizados:\n");
+                        System.out.println("Serão utilizados:\n");
+                        System.out.println("Conjunto: ");
+                        mostrarConjuntos(arquivo.getConjuntos(), 2);
 
-                        for (int j = 0; j < 2; j++) {
-                            for (int i = 0; i < arquivo.getConjuntos().get(j).getElementos().size(); i++) {
-                                if (arquivo.getConjuntos().get(j).getElementos().size() == 1) {
-                                    System.out.print("\t" + arquivo.getConjuntos().get(j).getNome() + " = {" + arquivo.getConjuntos().get(0).getElementos().get(i).getValor() + "}\n");
-                                } else {
-                                    if (i == 0) {
-                                        System.out.print("\t" + arquivo.getConjuntos().get(j).getNome() + " = {" + arquivo.getConjuntos().get(0).getElementos().get(i).getValor() + ", ");
-                                    } else if (i == arquivo.getConjuntos().get(j).getElementos().size() - 1) {
-                                        System.out.print(arquivo.getConjuntos().get(j).getElementos().get(i).getValor() + "}\n");
-                                    } else {
-                                        System.out.print(arquivo.getConjuntos().get(j).getElementos().get(i).getValor() + ", ");
-                                    }
-                                }
-                            }
-                        }
                         System.out.print("\nResultado: ");
                         if (contido.contidoIgual(arquivo.getConjuntos().get(0), arquivo.getConjuntos().get(1))) {
                             System.out.println("O conjunto " + arquivo.getConjuntos().get(0).getNome() + " é contido ou igual a " + arquivo.getConjuntos().get(1).getNome());
@@ -154,23 +178,9 @@ public class Menu {
                 case 4:
                     if (!arquivo.getConjuntos().isEmpty() && arquivo.getConjuntos().size() >= 2) {
 
-                        System.out.println("\nSerão utilizados:\n");
-
-                        for (int j = 0; j < 2; j++) {
-                            for (int i = 0; i < arquivo.getConjuntos().get(j).getElementos().size(); i++) {
-                                if (arquivo.getConjuntos().get(j).getElementos().size() == 1) {
-                                    System.out.print("\t" + arquivo.getConjuntos().get(j).getNome() + " = {" + arquivo.getConjuntos().get(0).getElementos().get(i).getValor() + "}\n");
-                                } else {
-                                    if (i == 0) {
-                                        System.out.print("\t" + arquivo.getConjuntos().get(j).getNome() + " = {" + arquivo.getConjuntos().get(0).getElementos().get(i).getValor() + ", ");
-                                    } else if (i == arquivo.getConjuntos().get(j).getElementos().size() - 1) {
-                                        System.out.print(arquivo.getConjuntos().get(j).getElementos().get(i).getValor() + "}\n");
-                                    } else {
-                                        System.out.print(arquivo.getConjuntos().get(j).getElementos().get(i).getValor() + ", ");
-                                    }
-                                }
-                            }
-                        }
+                        System.out.println("Serão utilizados:\n");
+                        System.out.println("Conjunto: ");
+                        mostrarConjuntos(arquivo.getConjuntos(), 2);
 
                         System.out.print("\nResultado: ");
                         if (contido.contidoPropriamente(arquivo.getConjuntos().get(0), arquivo.getConjuntos().get(1))) {
@@ -184,124 +194,48 @@ public class Menu {
                     break;
                 case 5:
                     if (!arquivo.getConjuntos().isEmpty() && arquivo.getConjuntos().size() >= 2) {
+
+                        System.out.println("Serão utilizados:\n");
+                        System.out.println("Conjunto: ");
+                        mostrarConjuntos(arquivo.getConjuntos(), arquivo.getConjuntos().size());
+
                         Conjunto conjuntoUniao = new Conjunto();
 
-                        System.out.println("\nSerão utilizados:\n");
-                        for (int j = 0; j < arquivo.getConjuntos().size(); j++) {
-                            conjuntoUniao = Uniao.getInstancia().get(conjuntoUniao, arquivo.getConjuntos().get(j));
-
-                            System.out.print(arquivo.getConjuntos().get(j).getNome() + " = ");
-                            if (arquivo.getConjuntos().get(j).getElementos().isEmpty()) {
-                                System.out.print("{}\n");
-                            } else {
-                                for (int i = 0; i < arquivo.getConjuntos().get(j).getElementos().size(); i++) {
-                                    if (arquivo.getConjuntos().get(j).getElementos().size() == 1) {
-                                        System.out.print("{" + arquivo.getConjuntos().get(j).getElementos().get(i).getValor() + "}\n");
-                                    } else {
-                                        if (i == 0) {
-                                            System.out.print("{" + arquivo.getConjuntos().get(j).getElementos().get(i).getValor() + ", ");
-                                        } else if (i == arquivo.getConjuntos().get(j).getElementos().size() - 1) {
-                                            System.out.print(arquivo.getConjuntos().get(j).getElementos().get(i).getValor() + "}\n");
-                                        } else {
-                                            System.out.print(arquivo.getConjuntos().get(j).getElementos().get(i).getValor() + ", ");
-                                        }
-                                    }
-                                }
-                            }
+                        for (Conjunto c : arquivo.getConjuntos()) {
+                            conjuntoUniao = Uniao.getInstancia().get(conjuntoUniao, c);
                         }
 
-                        System.out.println("\n\nO conjunto formado foi:");
-
-                        for (int i = 0; i < arquivo.getConjuntos().size(); i++) {
-                            if (i == 0) {
-                                System.out.print("União de " + arquivo.getConjuntos().get(i).getNome() + ", ");
-                            } else if (i == arquivo.getConjuntos().size() - 1) {
-                                System.out.print(arquivo.getConjuntos().get(i).getNome() + ".\n");
-                            } else {
-                                System.out.print(arquivo.getConjuntos().get(i).getNome() + " e ");
-                            }
-                        }
-
-                        if (conjuntoUniao.getElementos().isEmpty()) {
-                            System.out.println("\t{}\n");
-                        } else {
-                            for (int i = 0; i < conjuntoUniao.getElementos().size(); i++) {
-                                if (conjuntoUniao.getElementos().size() == 1) {
-                                    System.out.print("\t{" + conjuntoUniao.getElementos().get(i).getValor() + "}\n");
-                                } else {
-                                    if (i == 0) {
-                                        System.out.print("\t{" + conjuntoUniao.getElementos().get(i).getValor() + ", ");
-                                    } else if (i == conjuntoUniao.getElementos().size() - 1) {
-                                        System.out.print(conjuntoUniao.getElementos().get(i).getValor() + "}\n");
-                                    } else {
-                                        System.out.print(conjuntoUniao.getElementos().get(i).getValor() + ", ");
-                                    }
-                                }
-                            }
-                        }
+                        System.out.println("\n\nO conjunto formado foi:\n");
+                        System.out.print("União de: ");
+                        mostrarNomeConjuntos(arquivo.getConjuntos());
+                        System.out.print("\n");
+                        mostrarConjunto(conjuntoUniao);
                     } else {
                         System.out.println("Leia o arquivo (opção 1) ou verifique se há no mínimo 2 conjuntos nele.");
                     }
                     break;
                 case 6:
                     if (!arquivo.getConjuntos().isEmpty() && arquivo.getConjuntos().size() >= 2) {
+
+                        System.out.println("Serão utilizados:\n");
+                        System.out.println("Conjunto: ");
+                        mostrarConjuntos(arquivo.getConjuntos(), arquivo.getConjuntos().size());
+
                         Conjunto conjuntoIntercessao = new Conjunto();
 
-                        System.out.println("\nSerão utilizados:\n");
                         for (int j = 0; j < arquivo.getConjuntos().size(); j++) {
                             if (j == 0) {
                                 conjuntoIntercessao = Intercessao.getInstancia().get(arquivo.getConjuntos().get(j), arquivo.getConjuntos().get(j + 1));
                             } else {
                                 conjuntoIntercessao = Intercessao.getInstancia().get(conjuntoIntercessao, arquivo.getConjuntos().get(j));
                             }
-
-                            System.out.print(arquivo.getConjuntos().get(j).getNome() + " = ");
-                            if (arquivo.getConjuntos().get(j).getElementos().isEmpty()) {
-                                System.out.print("{}");
-                            } else {
-                                for (int i = 0; i < arquivo.getConjuntos().get(j).getElementos().size(); i++) {
-                                    if (arquivo.getConjuntos().get(j).getElementos().size() == 1) {
-                                        System.out.print("{" + arquivo.getConjuntos().get(j).getElementos().get(i).getValor() + "}");
-                                    } else {
-                                        if (i == 0) {
-                                            System.out.print("{" + arquivo.getConjuntos().get(j).getElementos().get(i).getValor() + ", ");
-                                        } else if (i == arquivo.getConjuntos().get(j).getElementos().size() - 1) {
-                                            System.out.print(arquivo.getConjuntos().get(j).getElementos().get(i).getValor() + "}\n");
-                                        } else {
-                                            System.out.print(arquivo.getConjuntos().get(j).getElementos().get(i).getValor() + ", ");
-                                        }
-                                    }
-                                }
-                            }
                         }
 
-                        System.out.println("\n\nO conjunto formado foi: ");
-                        for (int i = 0; i < arquivo.getConjuntos().size(); i++) {
-                            if (i == 0) {
-                                System.out.print("Intercessão de " + arquivo.getConjuntos().get(i).getNome() + ", ");
-                            } else if (i == arquivo.getConjuntos().size() - 1) {
-                                System.out.print(arquivo.getConjuntos().get(i).getNome() + ".\n");
-                            } else {
-                                System.out.print(arquivo.getConjuntos().get(i).getNome() + " e ");
-                            }
-                        }
-                        if (conjuntoIntercessao.getElementos().isEmpty()) {
-                            System.out.println("\t{}\n");
-                        } else {
-                            for (int i = 0; i < conjuntoIntercessao.getElementos().size(); i++) {
-                                if (conjuntoIntercessao.getElementos().size() == 1) {
-                                    System.out.print("\t{" + conjuntoIntercessao.getElementos().get(i).getValor() + "}\n");
-                                } else {
-                                    if (i == 0) {
-                                        System.out.print("\t{" + conjuntoIntercessao.getElementos().get(i).getValor() + ", ");
-                                    } else if (i == conjuntoIntercessao.getElementos().size() - 1) {
-                                        System.out.print(conjuntoIntercessao.getElementos().get(i).getValor() + "}\n");
-                                    } else {
-                                        System.out.print(conjuntoIntercessao.getElementos().get(i).getValor() + ", ");
-                                    }
-                                }
-                            }
-                        }
+                        System.out.println("\n\nO conjunto formado foi:\n");
+                        System.out.print("Intercessão de: ");
+                        mostrarNomeConjuntos(arquivo.getConjuntos());
+                        System.out.print("\n");
+                        mostrarConjunto(conjuntoIntercessao);
                     } else {
                         System.out.println("Leia o arquivo (opção 1) ou verifique se há no mínimo 2 conjuntos nele.");
                     }
@@ -309,54 +243,24 @@ public class Menu {
                 case 7:
                     if (!arquivo.getConjuntos().isEmpty() && arquivo.getConjuntos().size() >= 2) {
 
-                        System.out.println("\nSerão utilizados:\n");
+                        System.out.println("Serão utilizados:\n");
+                        System.out.println("Conjunto: ");
+                        mostrarConjuntos(arquivo.getConjuntos(), 2);
 
-                        for (int j = 0; j < 2; j++) {
-                            for (int i = 0; i < arquivo.getConjuntos().get(j).getElementos().size(); i++) {
-                                if (arquivo.getConjuntos().get(j).getElementos().size() == 1) {
-                                    System.out.print("\t" + arquivo.getConjuntos().get(j).getNome() + " = {" + arquivo.getConjuntos().get(0).getElementos().get(i).getValor() + "}");
-                                } else {
-                                    if (i == 0) {
-                                        System.out.print("\t" + arquivo.getConjuntos().get(j).getNome() + " = {" + arquivo.getConjuntos().get(0).getElementos().get(i).getValor() + ", ");
-                                    } else if (i == arquivo.getConjuntos().get(j).getElementos().size() - 1) {
-                                        System.out.print(arquivo.getConjuntos().get(j).getElementos().get(i).getValor() + "}\n");
-                                    } else {
-                                        System.out.print(arquivo.getConjuntos().get(j).getElementos().get(i).getValor() + ", ");
-                                    }
-                                }
-                            }
-                            System.out.print("\n");
-                        }
                         ProdutoCartesiano produtoCartesiano = new ProdutoCartesiano();
 
                         List<Object> resultadoProdutoCartesiano = produtoCartesiano.get(arquivo.getConjuntos().get(0), arquivo.getConjuntos().get(1));
-                        System.out.println("Resultado:\n");
+
+                        System.out.println("\nResultado:\n");
                         produtoCartesiano.imprimir(resultadoProdutoCartesiano);
 
                         System.out.println("\n\nDeseja reverter? Digite 'S' para SIM");
                         String escolhaReverterProdutoCartesiano = scanner.next();
 
                         if ("S".equals(escolhaReverterProdutoCartesiano.toUpperCase())) {
-                            System.out.println("Resultado: ");
-
+                            System.out.println("\nResultado:\n");
                             List<Conjunto> reverterProdutoCartesiano = produtoCartesiano.reverterParesOrdenados(resultadoProdutoCartesiano);
-
-                            for (int i = 0; i < reverterProdutoCartesiano.size(); i++) {
-                                for (int j = 0; j < reverterProdutoCartesiano.get(i).getElementos().size(); j++) {
-                                    if (reverterProdutoCartesiano.get(i).getElementos().size() == 1) {
-                                        System.out.print("\t{" + reverterProdutoCartesiano.get(i).getElementos().get(j).getValor() + "}");
-                                    } else {
-                                        if (0 == j) {
-                                            System.out.print("\t{" + reverterProdutoCartesiano.get(i).getElementos().get(j).getValor() + ", ");
-                                        } else if (reverterProdutoCartesiano.get(i).getElementos().size() - 1 == j) {
-                                            System.out.print(reverterProdutoCartesiano.get(i).getElementos().get(j).getValor() + "} ");
-                                        } else {
-                                            System.out.print(reverterProdutoCartesiano.get(i).getElementos().get(j).getValor() + ", ");
-                                        }
-                                    }
-                                }
-                                System.out.print("\n");
-                            }
+                            mostrarConjuntos(reverterProdutoCartesiano, reverterProdutoCartesiano.size());
                         }
                     } else {
                         System.out.println("Leia o arquivo (opção 1) ou verifique se há no mínimo 2 conjuntos nele.");
@@ -365,48 +269,23 @@ public class Menu {
                 case 8:
                     if (!arquivo.getConjuntos().isEmpty()) {
 
-                        System.out.println("\nSerá utilizado:\n");
-
-                        for (int i = 0; i < arquivo.getConjuntos().get(0).getElementos().size(); i++) {
-                            if (arquivo.getConjuntos().get(0).getElementos().size() == 1) {
-                                System.out.print("\t" + arquivo.getConjuntos().get(0).getNome() + " = {" + arquivo.getConjuntos().get(0).getElementos().get(i).getValor() + "}\n");
-                            } else {
-                                if (i == 0) {
-                                    System.out.print("{" + arquivo.getConjuntos().get(0).getElementos().get(i).getValor() + ", ");
-                                } else if (i == arquivo.getConjuntos().get(0).getElementos().size() - 1) {
-                                    System.out.print(arquivo.getConjuntos().get(0).getElementos().get(i).getValor() + "}\n");
-                                } else {
-                                    System.out.print(arquivo.getConjuntos().get(0).getElementos().get(i).getValor() + ", ");
-                                }
-                            }
-                        }
+                        System.out.println("Serão utilizados:\n");
+                        System.out.println("Conjunto: ");
+                        mostrarConjuntos(arquivo.getConjuntos(), 1);
 
                         ConjuntoDasPartes conjuntoDasPartes = new ConjuntoDasPartes();
 
                         List<Conjunto> resultadoConjuntoDasPartes = conjuntoDasPartes.get(arquivo.getConjuntos().get(0));
+                        System.out.print("\n");
                         conjuntoDasPartes.imprimir(resultadoConjuntoDasPartes);
 
                         System.out.println("\n\nDeseja reverter? Digite 'S' para SIM");
                         String escolhaReverterConjuntodasPartes = scanner.next();
 
                         if ("S".equals(escolhaReverterConjuntodasPartes.toUpperCase())) {
-                            System.out.println("Resultado: ");
-
+                            System.out.println("\nResultado:\n");
                             Conjunto reversaoConjuntoDasPartes = conjuntoDasPartes.reverter(resultadoConjuntoDasPartes);
-
-                            for (int i = 0; i < reversaoConjuntoDasPartes.getElementos().size(); i++) {
-                                if (reversaoConjuntoDasPartes.getElementos().size() == 1) {
-                                    System.out.print("\t{" + reversaoConjuntoDasPartes.getElementos().get(i).getValor() + "}\n");
-                                } else {
-                                    if (i == 0) {
-                                        System.out.print("\t{" + reversaoConjuntoDasPartes.getElementos().get(i).getValor() + ", ");
-                                    } else if (i == reversaoConjuntoDasPartes.getElementos().size() - 1) {
-                                        System.out.print(reversaoConjuntoDasPartes.getElementos().get(i).getValor() + "}\n");
-                                    } else {
-                                        System.out.print(reversaoConjuntoDasPartes.getElementos().get(i).getValor() + ", ");
-                                    }
-                                }
-                            }
+                            mostrarConjunto(reversaoConjuntoDasPartes);
                         }
                     } else {
                         System.out.println("Leia o arquivo (opção 1) ou verifique se há no mínimo 1 conjunto nele.");
@@ -415,47 +294,16 @@ public class Menu {
                 case 9:
                     if (!arquivo.getConjuntos().isEmpty() && arquivo.getConjuntos().size() >= 2) {
 
-                        System.out.println("\nSerão utilizados:\n");
-
-                        for (int j = 0; j < 2; j++) {
-                            for (int i = 0; i < arquivo.getConjuntos().get(j).getElementos().size(); i++) {
-                                if (arquivo.getConjuntos().get(j).getElementos().size() == 1) {
-                                    System.out.print("\t" + arquivo.getConjuntos().get(j).getNome() + " = {" + arquivo.getConjuntos().get(0).getElementos().get(i).getValor() + "}");
-                                } else {
-                                    if (i == 0) {
-                                        System.out.print("\t" + arquivo.getConjuntos().get(j).getNome() + " = {" + arquivo.getConjuntos().get(0).getElementos().get(i).getValor() + ", ");
-                                    } else if (i == arquivo.getConjuntos().get(j).getElementos().size() - 1) {
-                                        System.out.print(arquivo.getConjuntos().get(j).getElementos().get(i).getValor() + "}\n");
-                                    } else {
-                                        System.out.print(arquivo.getConjuntos().get(j).getElementos().get(i).getValor() + ", ");
-                                    }
-                                }
-                            }
-                            System.out.print("\n");
-                        }
+                        System.out.println("Serão utilizados:\n");
+                        System.out.println("Conjunto: ");
+                        mostrarConjuntos(arquivo.getConjuntos(), 2);
 
                         Diferenca diferenca = new Diferenca();
                         Conjunto conjuntoDiferenca = diferenca.get(arquivo.getConjuntos().get(0), arquivo.getConjuntos().get(1));
 
-                        System.out.println("\nConjunto formado: " + arquivo.getConjuntos().get(0).getNome() + " - " + arquivo.getConjuntos().get(1).getNome());
-
-                        if (conjuntoDiferenca.getElementos().isEmpty()) {
-                            System.out.print("\n\t{}");
-                        } else {
-                            for (int i = 0; i < conjuntoDiferenca.getElementos().size(); i++) {
-                                if (conjuntoDiferenca.getElementos().size() == 1) {
-                                    System.out.print("\n\t{" + conjuntoDiferenca.getElementos().get(i).getValor() + "}\n");
-                                } else {
-                                    if (i == 0) {
-                                        System.out.print("\n\t{" + conjuntoDiferenca.getElementos().get(i).getValor() + ", ");
-                                    } else if (i == conjuntoDiferenca.getElementos().size() - 1) {
-                                        System.out.print(conjuntoDiferenca.getElementos().get(i).getValor() + "}\n");
-                                    } else {
-                                        System.out.print(conjuntoDiferenca.getElementos().get(i).getValor() + ", ");
-                                    }
-                                }
-                            }
-                        }
+                        System.out.println("\nConjunto formado:");
+                        System.out.print("\n" + arquivo.getConjuntos().get(0).getNome() + " - " + arquivo.getConjuntos().get(1).getNome() + " = ");
+                        mostrarConjunto(conjuntoDiferenca);
                     } else {
                         System.out.println("Leia o arquivo (opção 1) ou verifique se há no mínimo 2 conjuntos nele.");
                     }
